@@ -1,0 +1,20 @@
+# requirements.txt
+# Core dependencies for AI-Powered Conversational Diary
+
+# LangChain for LLM integration
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-core>=0.1.0
+
+# OpenAI
+openai>=1.0.0
+
+# Database
+psycopg2-binary>=2.9.9
+
+# Environment management
+python-dotenv>=1.0.0
+
+# Optional: Vector database clients
+pinecone>=3.0.0
+# qdrant-client>=1.7.0
