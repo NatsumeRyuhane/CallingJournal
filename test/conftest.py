@@ -1,6 +1,6 @@
 """Test configuration and fixtures."""
 import pytest
-import pytest_asyncio
+import pytest
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.pool import StaticPool
 
@@ -12,7 +12,7 @@ from main import app
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
 
-@pytest_asyncio.fixture
+@pytest.fixture
 async def test_db():
     """Create test database."""
     engine = create_async_engine(

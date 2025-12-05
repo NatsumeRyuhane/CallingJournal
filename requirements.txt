@@ -10,6 +10,7 @@ sqlalchemy==2.0.36
 alembic==1.14.0
 asyncpg==0.30.0  # PostgreSQL async driver
 aiosqlite==0.20.0  # SQLite async driver (for development)
+greenlet==3.3.0  # Required for SQLAlchemy async with asyncio
 
 # LLM Integration
 openai==1.55.3
@@ -23,7 +24,7 @@ twilio==9.3.7
 
 # Audio Processing
 pydub==0.25.1
-speechrecognition==3.11.0
+speechrecognition==3.14.4
 openai-whisper==20250625  # Whisper for local transcription
 ffmpeg-python==0.2.0  # For audio format conversion
 

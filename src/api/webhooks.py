@@ -152,16 +152,39 @@ async def twilio_voice_response(
     """
     form_data = await request.form()
     
-    # Generate a simple voice response
+    # Determine WebSocket URL from request
+    host = request.headers.get("host")
+    # Force wss if using ngrok (usually safer) or trust scheme
+    # If running behind ngrok http, scheme is http, but we want wss for the public side usually
+    # But let's just log what we have first
+    # Force wss if using ngrok, cloudflare, or localtunnel
+    is_secure_host = any(domain in host for domain in ["ngrok", "cloudflare", "localtunnel", "pinggy"])
+    protocol = "wss" if request.url.scheme == "https" or is_secure_host else "ws"
+    stream_url = f"{protocol}://{host}/streams/twilio"
+    
+    print(f"DEBUG: Generated Stream URL: {stream_url}")
+    
+    # Generate TwiML with Stream
     twiml = phone_service.generate_twiml_response(
-        message="Hello! This is your calling journal assistant. How can I help you today?",
-        gather_input=True,
-        action="/webhooks/twilio/process-speech",
+        stream=True,
+        stream_url=stream_url,
+        message="Connecting to your AI assistant.",
         record=True
     )
     
+    print(f"DEBUG: Generated TwiML: {twiml}")
+    
     from fastapi.responses import Response
     return Response(content=twiml, media_type="application/xml")
+
+
+@router.get("/twilio/voice")
+async def twilio_voice_test():
+    """
+    Test endpoint for browser verification.
+    """
+    print("DEBUG: GET request received on /twilio/voice")
+    return {"message": "Twilio webhook is accessible via GET"}
 
 
 @router.post("/twilio/process-speech")

@@ -137,13 +137,13 @@ class TwilioPhoneService(IPhoneService):
             record=kwargs.get("record", True),
             **{k: v for k, v in kwargs.items() if k not in ["url", "status_callback", "record"]}
         )
-        
+        print(f"DEBUG: Call object attributes: {dir(call)}")
         return {
             "call_id": call.sid,
             "status": call.status,
             "direction": call.direction,
-            "to": call.to,
-            "from": call.from_,
+            "to": getattr(call, "to", None),
+            "from": getattr(call, "from_", None),
             "created_at": datetime.utcnow().isoformat()
         }
     
@@ -187,6 +187,23 @@ class TwilioPhoneService(IPhoneService):
         """Generate TwiML response."""
         response = VoiceResponse()
         
+        # If using stream, play message first, then connect to stream
+        if kwargs.get("stream"):
+            # Play greeting message before connecting to stream
+            if message:
+                response.say(message, voice=kwargs.get("voice", "Polly.Joanna"))
+            
+            # Connect to WebSocket stream for bidirectional audio
+            connect = response.connect()
+            stream = connect.stream(url=kwargs.get("stream_url"))
+            # Add custom parameters if needed
+            if kwargs.get("stream_params"):
+                for key, value in kwargs.get("stream_params").items():
+                    stream.parameter(name=key, value=value)
+            # Note: <Record> should NOT be used with <Connect><Stream> as Stream handles audio
+            return str(response)
+        
+        # Non-streaming mode
         if gather_input:
             gather = response.gather(
                 input=kwargs.get("input", "speech"),
