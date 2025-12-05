@@ -6,9 +6,7 @@ import json
 import asyncio
 import base64
 import sys
-import os
 import audioop
-import time
 from datetime import datetime
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 import websockets
