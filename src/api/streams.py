@@ -215,7 +215,6 @@ async def websocket_endpoint(websocket: WebSocket):
     state = ConversationState()
     stream_sid = None
     call_sid = None
-    dg_ws = None
     
     try:
         # Connect to Deepgram
