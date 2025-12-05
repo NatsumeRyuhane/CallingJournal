@@ -43,7 +43,7 @@ class Settings(BaseSettings):
     # Phone Service
     twilio_account_sid: str = ""
     twilio_auth_token: str = ""
-    twilio_phone_number: str = ""
+    twilio_phone_number: str = "+17752547971"
     # vonage_api_key: str = ""
     # vonage_api_secret: str = ""
     # vonage_phone_number: str = ""
