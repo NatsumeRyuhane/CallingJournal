@@ -1,0 +1,55 @@
+# Core Backend Framework
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+pydantic-settings==2.6.1
+email-validator
+
+# Database
+sqlalchemy==2.0.36
+alembic==1.14.0
+asyncpg==0.30.0  # PostgreSQL async driver
+aiosqlite==0.20.0  # SQLite async driver (for development)
+
+# LLM Integration
+openai==1.55.3
+anthropic==0.39.0
+langchain==0.3.7
+langchain-openai==0.2.9
+
+# Phone Call Integration
+twilio==9.3.7
+# vonage==3.11.0  # Alternative phone service
+
+# Audio Processing
+pydub==0.25.1
+speechrecognition==3.11.0
+openai-whisper==20250625  # Whisper for local transcription
+ffmpeg-python==0.2.0  # For audio format conversion
+
+# Task Queue & Background Jobs
+celery==5.4.0
+redis==5.2.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.20
+
+# Environment & Config
+python-dotenv==1.0.1
+
+# Utilities
+httpx==0.28.1
+aiofiles==24.1.0
+python-dateutil==2.9.0.post0
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+pytest-cov==6.0.0
+
+# Development
+black==24.10.0
+flake8==7.1.1
+mypy==1.13.0
