@@ -83,6 +83,8 @@ app.include_router(journals.router)
 app.include_router(knowledge.router)
 app.include_router(llm.router)
 app.include_router(webhooks.router)
+from src.api import streams
+app.include_router(streams.router)
 
 
 @app.get("/")
