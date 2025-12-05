@@ -279,6 +279,7 @@ async def websocket_endpoint(websocket: WebSocket):
             try:
                 await receiver_task
             except asyncio.CancelledError:
+                # Task cancellation is expected and safe to ignore here.
                 pass
             
             # Close Deepgram connection gracefully
