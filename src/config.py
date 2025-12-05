@@ -52,6 +52,10 @@ class Settings(BaseSettings):
     # Using local Whisper or SpeechRecognition - no API key needed
     whisper_model: str = "base"  # Options: tiny, base, small, medium, large
     
+    # Deepgram (for streaming transcription)
+    deepgram_api_key: str = ""
+    deepgram_model: str = "nova-3"  # Options: nova-3, nova-2, whisper, etc.
+    
     # Redis
     redis_url: str = "redis://localhost:6379/0"
     
