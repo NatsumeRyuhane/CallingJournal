@@ -1,6 +1,5 @@
 """Test configuration and fixtures."""
 import pytest
-import pytest
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.pool import StaticPool
 
