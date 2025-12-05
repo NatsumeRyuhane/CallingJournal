@@ -152,56 +152,6 @@ async def deepgram_receiver(dg_ws, state: ConversationState, twilio_ws: WebSocke
         log(f"❌ Deepgram receiver error: {e}")
 
 
-async def audio_forwarder(twilio_ws: WebSocket, dg_ws, state: ConversationState):
-    """Forward audio from Twilio to Deepgram."""
-    stream_sid = None
-    call_sid = None
-    media_count = 0
-    
-    try:
-        while True:
-            data = await twilio_ws.receive_text()
-            message = json.loads(data)
-            event = message.get('event', 'unknown')
-            
-            if event == 'connected':
-                log(f"✅ Twilio connected")
-                
-            elif event == 'start':
-                start_data = message.get('start', {})
-                stream_sid = start_data.get('streamSid')
-                call_sid = start_data.get('callSid')
-                log(f"✅ Stream started: {call_sid}")
-                # Return stream_sid for beep function
-                return stream_sid, call_sid, "started"
-                
-            elif event == 'media':
-                media_count += 1
-                # Get raw mulaw audio
-                payload = message['media']['payload']
-                audio_bytes = base64.b64decode(payload)
-                
-                # Forward directly to Deepgram (it accepts mulaw 8kHz)
-                await dg_ws.send(audio_bytes)
-                
-                if media_count % 200 == 0:
-                    log(f"📦 Forwarded {media_count} packets to Deepgram")
-                
-            elif event == 'stop':
-                log(f"🛑 Stream stopped")
-                return stream_sid, call_sid, "stopped"
-                
-            elif event == 'mark':
-                pass  # Ignore marks
-                
-    except WebSocketDisconnect:
-        log(f"⚠️ Twilio disconnected")
-        return stream_sid, call_sid, "disconnected"
-    except Exception as e:
-        log(f"❌ Forwarder error: {e}")
-        return stream_sid, call_sid, "error"
-
-
 @router.websocket("/twilio")
 async def websocket_endpoint(websocket: WebSocket):
     """
