@@ -49,7 +49,7 @@ ngrok config add-authtoken YOUR_NGROK_AUTHTOKEN
 # Twilio（打电话）
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-TWILIO_PHONE_NUMBER=+17752547971
+TWILIO_PHONE_NUMBER=+1XXXXXXXXXX
 
 # Deepgram（语音转录）
 DEEPGRAM_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
