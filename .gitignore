@@ -34,7 +34,7 @@ ENV/
 *~
 
 # Environment variables
-.env
+backend/.env
 .env.local
 
 # Database
@@ -95,4 +95,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-

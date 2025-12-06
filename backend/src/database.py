@@ -5,6 +5,7 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from sqlalchemy.orm import declarative_base
 
+# backend/src/database.py
 from src.config import settings
 
 # Create async engine
@@ -30,7 +31,7 @@ Base = declarative_base()
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
     Dependency for getting database sessions.
-    
+
     Yields:
         AsyncSession: Database session
     """
