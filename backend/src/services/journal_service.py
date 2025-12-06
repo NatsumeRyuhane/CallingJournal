@@ -6,6 +6,7 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime, timezone
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, and_
+from sqlalchemy.orm import selectinload
 
 from src.db_models import Call, Conversation, Journal, KnowledgeBase, ConversationTurn
 from src.services.llm_service import ILLMService, llm_service as default_llm_service
@@ -147,7 +148,9 @@ class JournalService:
             Journal object or None
         """
         result = await db.execute(
-            select(Journal).where(Journal.id == journal_id)
+            select(Journal)
+            .options(selectinload(Journal.call))
+            .where(Journal.id == journal_id)
         )
         return result.scalar_one_or_none()
     
