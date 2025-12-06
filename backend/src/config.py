@@ -95,7 +95,7 @@ class Settings(BaseSettings):
     log_file: str = "./logs/app.log"
     
     # CORS
-    cors_origins: List[str] = ["http://localhost:3000", "http://localhost:8080","http://localhost:80"]
+    cors_origins: List[str] = ["http://localhost:3000", "http://localhost:8080", "http://localhost:80"]
 
 
 # Global settings instance
