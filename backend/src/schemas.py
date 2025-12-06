@@ -67,6 +67,8 @@ class CallResponse(BaseModel):
     
     class Config:
         from_attributes = True
+        use_enum_values = True
+        orm_mode = True
 
 
 # Conversation Schemas
@@ -131,12 +133,18 @@ class JournalResponse(BaseModel):
     
     class Config:
         from_attributes = True
+        use_enum_values = True
+        orm_mode = True
 
 
 class JournalDetailResponse(JournalResponse):
     """Schema for detailed journal response."""
     full_content: Optional[str]
     call: Optional[CallResponse] = None
+
+    class Config:
+        orm_mode = True
+        use_enum_values = True
 
 
 # Knowledge Base Schemas

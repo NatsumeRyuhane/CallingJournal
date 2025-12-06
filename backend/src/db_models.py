@@ -12,11 +12,16 @@ from src.database import Base
 
 class CallStatus(str, enum.Enum):
     """Enum for call status."""
-    PENDING = "pending"
-    IN_PROGRESS = "in_progress"
-    COMPLETED = "completed"
-    FAILED = "failed"
-    CANCELLED = "cancelled"
+    # PENDING = "pending"
+    # IN_PROGRESS = "in_progress"
+    # COMPLETED = "completed"
+    # FAILED = "failed"
+    # CANCELLED = "cancelled"
+    PENDING = "PENDING"
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+    CANCELLED = "CANCELLED"
 
 
 class ConversationTurn(str, enum.Enum):

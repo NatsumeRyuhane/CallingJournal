@@ -51,7 +51,7 @@ class Settings(BaseSettings):
     # JWT Authentication
     secret_key: str
     algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
+    access_token_expire_minutes: int = 60 * 24  # 1 day
     
     # LLM Configuration
     openai_api_key: str = ""
@@ -95,7 +95,7 @@ class Settings(BaseSettings):
     log_file: str = "./logs/app.log"
     
     # CORS
-    cors_origins: List[str] = ["http://localhost:3000", "http://localhost:8080"]
+    cors_origins: List[str] = ["http://localhost:3000", "http://localhost:8080","http://localhost:80"]
 
 
 # Global settings instance
