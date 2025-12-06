@@ -12,6 +12,10 @@ asyncpg==0.30.0  # PostgreSQL async driver
 aiosqlite==0.20.0  # SQLite async driver (for development)
 greenlet==3.3.0  # Required for SQLAlchemy async with asyncio
 
+# Optional: Vector database clients
+pinecone>=3.0.0
+# qdrant-client>=1.7.0
+
 # LLM Integration
 openai==1.55.3
 anthropic==0.39.0
