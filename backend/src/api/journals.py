@@ -250,5 +250,7 @@ async def extract_knowledge(
             break
     
     background_tasks.add_task(_extract)
+    # 🔍 DEBUG MODE: run inline, not as background task
+    await _extract()
     
     return MessageResponse(message="Knowledge extraction started")
