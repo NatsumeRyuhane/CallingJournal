@@ -56,7 +56,7 @@ from fastapi.responses import JSONResponse
 
 from src.logging_config import setup_logging, get_logger
 from src.database import init_db, close_db
-from src.api import auth, calls, journals, knowledge, llm, webhooks
+from src.api import auth, calls, journals, knowledge, llm, webhooks, streams
 
 # Initialize logging
 setup_logging(
@@ -120,7 +120,6 @@ app.include_router(journals.router)
 app.include_router(knowledge.router)
 app.include_router(llm.router)
 app.include_router(webhooks.router)
-from src.api import streams
 app.include_router(streams.router)
 
 

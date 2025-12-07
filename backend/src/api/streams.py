@@ -13,7 +13,7 @@ from sqlalchemy import select
 
 from src.config import settings
 from src.logging_config import get_logger
-from src.database import async_session_factory
+from src.database import AsyncSessionLocal
 from src.db_models import Call, Journal, Conversation, ConversationTurn
 from src.services.conversation_service import conversation_service, ConversationContext
 from src.services.tts_service import tts_service
@@ -84,7 +84,7 @@ async def send_audio_to_twilio(twilio_ws: WebSocket, stream_sid: str, audio_data
 
 async def speak_response(twilio_ws: WebSocket, state: CallState, text: str):
     """
-    Generate TTS and send to Twilio.
+    Log the AI response, generate TTS audio, and send to Twilio.
 
     Args:
         twilio_ws: Twilio WebSocket connection
@@ -151,7 +151,7 @@ async def save_diary_to_database(
     Returns:
         Journal ID if saved successfully, None otherwise
     """
-    async with async_session_factory() as db:
+    async with AsyncSessionLocal() as db:
         try:
             # Find the call record by external_call_id
             result = await db.execute(

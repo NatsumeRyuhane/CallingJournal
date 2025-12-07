@@ -1,12 +1,9 @@
 """
 LLM API endpoints for direct interaction with language models.
 """
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database import get_db
 from src.schemas import LLMChatRequest, LLMSummarizeRequest
 from src.db_models import User
 from src.api.auth import get_current_user

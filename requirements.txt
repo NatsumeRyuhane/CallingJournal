@@ -23,9 +23,11 @@ anthropic==0.39.0
 langchain==0.3.7
 langchain-openai==0.2.9
 
+# Retrieval & Embeddings
+pinecone == 8.0.0
+
 # Phone Call Integration
 twilio==9.3.7
-# vonage==3.11.0  # Alternative phone service
 
 # Audio Processing
 pydub==0.25.1

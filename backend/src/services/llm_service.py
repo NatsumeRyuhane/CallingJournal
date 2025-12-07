@@ -2,12 +2,13 @@
 LLM service module for handling AI conversation and summarization.
 Provides abstraction layer for different LLM providers (OpenAI, Anthropic, etc.)
 """
+import json
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional, AsyncGenerator
 from enum import Enum
 
 import openai
-from anthropic import Anthropic, AsyncAnthropic
+from anthropic import AsyncAnthropic
 
 from src.config import settings
 
@@ -209,7 +210,6 @@ class OpenAILLMService(ILLMService):
             response_format={"type": "json_object"}
         )
         
-        import json
         return json.loads(response)
     
     async def extract_entities(
@@ -233,7 +233,6 @@ class OpenAILLMService(ILLMService):
             response_format={"type": "json_object"}
         )
         
-        import json
         result = json.loads(response)
         return result.get("entities", [])
     
@@ -260,7 +259,6 @@ class OpenAILLMService(ILLMService):
             response_format={"type": "json_object"}
         )
         
-        import json
         return json.loads(response)
 
 
@@ -357,7 +355,6 @@ class AnthropicLLMService(ILLMService):
             system=system_prompt
         )
         
-        import json
         # Extract JSON from response (Claude might wrap it in markdown)
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0].strip()
@@ -384,7 +381,6 @@ class AnthropicLLMService(ILLMService):
         
         response = await self.generate_response(messages=messages, temperature=0.3)
         
-        import json
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0].strip()
         elif "```" in response:
@@ -413,13 +409,13 @@ class AnthropicLLMService(ILLMService):
         
         response = await self.generate_response(messages=messages, temperature=0.3)
         
-        import json
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0].strip()
         elif "```" in response:
             response = response.split("```")[1].split("```")[0].strip()
         
         return json.loads(response)
+    
 
 
 class OpenRouterLLMService(ILLMService):
@@ -523,7 +519,6 @@ class OpenRouterLLMService(ILLMService):
             **kwargs
         )
 
-        import json
         # Handle potential markdown wrapping
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0].strip()
@@ -553,7 +548,6 @@ class OpenRouterLLMService(ILLMService):
             **kwargs
         )
 
-        import json
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0].strip()
         elif "```" in response:
@@ -583,13 +577,13 @@ class OpenRouterLLMService(ILLMService):
             **kwargs
         )
 
-        import json
         if "```json" in response:
             response = response.split("```json")[1].split("```")[0].strip()
         elif "```" in response:
             response = response.split("```")[1].split("```")[0].strip()
 
         return json.loads(response)
+    
 
 
 class LLMServiceFactory:

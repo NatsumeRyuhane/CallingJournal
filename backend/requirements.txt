@@ -30,7 +30,6 @@ twilio==9.3.7
 pydub==0.25.1
 speechrecognition==3.14.4
 openai-whisper==20250625  # Whisper for local transcription
-ffmpeg-python==0.2.0  # For audio format conversion
 
 # Task Queue & Background Jobs
 celery==5.4.0

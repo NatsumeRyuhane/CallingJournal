@@ -138,6 +138,7 @@ CallingJournal/
 - Node.js 18+
 - PostgreSQL 15+
 - Redis 7+
+- ffmpeg (for audio processing)
 - ngrok (for Twilio webhooks)
 
 ### Backend Setup

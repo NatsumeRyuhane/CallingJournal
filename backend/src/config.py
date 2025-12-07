@@ -6,8 +6,8 @@ See .env.example for documentation of all available settings.
 
 IMPORTANT: Do not add default values here. All defaults should be set in .env
 """
-from typing import List
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pathlib import Path
 
 
 class Settings(BaseSettings):
@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     """
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=Path(__file__).parent.parent / ".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore"
@@ -136,8 +136,7 @@ class Settings(BaseSettings):
 
     # -------------------------------------------------------------------------
     # CORS
-    # -------------------------------------------------------------------------
-    cors_origins: List[str]
+    cors_origins: list[str]
 
 
 # Global settings instance
