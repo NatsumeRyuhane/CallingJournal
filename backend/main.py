@@ -1,32 +1,24 @@
 """
 Main FastAPI application entry point.
 """
-import logging
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from src.config import settings
+from src.logging_config import setup_logging, get_logger
 from src.database import init_db, close_db
 from src.api import auth, calls, journals, knowledge, llm, webhooks
 
-
-# Create log directory if it doesn't exist
-import os
-os.makedirs(os.path.dirname(settings.log_file), exist_ok=True)
-
-# Configure logging
-logging.basicConfig(
-    level=getattr(logging, settings.log_level),
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(settings.log_file),
-        logging.StreamHandler()
-    ]
+# Initialize logging first
+setup_logging(
+    log_level=settings.log_level,
+    log_file=settings.log_file
 )
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 @asynccontextmanager
