@@ -136,7 +136,7 @@ class Settings(BaseSettings):
 
     # -------------------------------------------------------------------------
     # CORS
-    cors_origins: list[str] = ["http://localhost:3000", "http://localhost:8080", "http://localhost:80"]
+    cors_origins: list[str]
 
 
 # Global settings instance
