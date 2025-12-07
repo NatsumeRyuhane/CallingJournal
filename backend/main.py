@@ -1,18 +1,64 @@
 """
 Main FastAPI application entry point.
 """
+import sys
 import os
 from contextlib import asynccontextmanager
+from pydantic import ValidationError
+
+
+def validate_config():
+    """
+    Validate configuration on startup.
+    Returns settings if valid, prints friendly error and exits if not.
+    """
+    try:
+        from src.config import Settings
+        return Settings()
+    except ValidationError as e:
+        print("\n" + "=" * 60)
+        print("CONFIGURATION ERROR")
+        print("=" * 60)
+        print("\nThe following required configuration values are missing or invalid:\n")
+
+        for error in e.errors():
+            field = error["loc"][0] if error["loc"] else "unknown"
+            field_upper = field.upper()
+            msg = error["msg"]
+            error_type = error["type"]
+
+            if error_type == "missing":
+                print(f"  • {field_upper}")
+                print(f"    Missing required value. Add to your .env file.")
+            else:
+                print(f"  • {field_upper}")
+                print(f"    {msg}")
+            print()
+
+        print("-" * 60)
+        print("To fix this:")
+        print("  1. Copy .env.example to .env if you haven't already:")
+        print("     cp .env.example .env")
+        print("  2. Edit .env and fill in the missing values")
+        print("  3. Restart the application")
+        print("-" * 60)
+        print()
+        sys.exit(1)
+
+
+# Validate configuration before importing anything else
+settings = validate_config()
+
+# Now safe to import modules that depend on settings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from src.config import settings
 from src.logging_config import setup_logging, get_logger
 from src.database import init_db, close_db
 from src.api import auth, calls, journals, knowledge, llm, webhooks
 
-# Initialize logging first
+# Initialize logging
 setup_logging(
     log_level=settings.log_level,
     log_file=settings.log_file
@@ -31,16 +77,15 @@ async def lifespan(app: FastAPI):
     logger.info("Starting CallingJournal application...")
     await init_db()
     logger.info("Database initialized")
-    
+
     # Create necessary directories
-    import os
     os.makedirs(settings.audio_storage_path, exist_ok=True)
     os.makedirs(settings.log_storage_path, exist_ok=True)
     os.makedirs(settings.journal_storage_path, exist_ok=True)
     logger.info("Storage directories created")
-    
+
     yield
-    
+
     # Shutdown
     logger.info("Shutting down CallingJournal application...")
     await close_db()
