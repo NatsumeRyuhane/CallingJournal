@@ -169,6 +169,9 @@ async def save_diary_to_database(
                     continue  # Skip system messages
 
                 turn = ConversationTurn.USER if msg.role == "user" else ConversationTurn.ASSISTANT
+                logger.debug(
+                    f"SAVING TURN: role={msg.role}, enum={turn!r}, value={turn.value}"
+                )
                 conversation = Conversation(
                     call_id=call.id,
                     turn=turn,
