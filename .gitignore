@@ -56,7 +56,7 @@ lerna-debug.log*
 # ===================
 # Environment Variables
 # ===================
-.env
+backend/.env
 .env.local
 backend/.env
 

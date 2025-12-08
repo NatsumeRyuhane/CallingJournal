@@ -151,6 +151,8 @@ class JournalService:
             sentiment=summary_data.get("sentiment", "neutral")
         )
 
+        # TODO embedding vector
+
         db.add(journal)
         await db.flush()
 
