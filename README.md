@@ -281,12 +281,6 @@ Configure in `.env` - only the selected provider's API key is required.
 
 ---
 
-## License
-
-[MIT License](LICENSE)
-
----
-
 ## Acknowledgments
 
 - [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
